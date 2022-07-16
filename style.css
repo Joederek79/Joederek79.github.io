@@ -589,12 +589,11 @@ button {
     flex-direction: row;
   }
 
-  /*  .icon2 {
-    width: 0.2rem;
-
+  .icon2 {
     align-self: center;
-     font-size: 1rem; 
-  }*/
+  }
+  /* font-size: 1rem; 
+  */
 
   .cv-container > * {
     display: inline;
