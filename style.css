@@ -587,13 +587,15 @@ button {
 
   .aside-cv-col {
     flex-direction: row;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
-  .icon2 {
+  .back-to-main {
     align-self: center;
+    width: fit-content;
+    font-size: 1rem;
   }
-  /* font-size: 1rem; 
-  */
 
   .cv-container > * {
     display: inline;
@@ -610,5 +612,24 @@ button {
   }
   .fa-facebook {
     margin-right: 1rem;
+  }
+
+  .fa-facebook.icon2,
+  .icon2 {
+    color: rgb(151, 49, 5);
+    cursor: pointer;
+    /* opacity: 0%; */
+
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  #ma-face {
+    width: 2rem;
+    height: auto;
+  }
+
+  #menu-cv {
+    display: none;
   }
 }
