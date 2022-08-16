@@ -50,8 +50,8 @@ a {
 }
 
 .bg-landing {
-  position: absolute;
-  height: 110vh;
+  position: relative;
+  height: 100vh;
   width: 100%;
   background-color: rgb(229, 206, 175);
 }
@@ -161,6 +161,7 @@ a {
   background-color: rgb(9, 9, 11);
   visibility: hidden;
 }
+
 .bg-3 {
   position: absolute;
   width: 100vw;

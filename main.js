@@ -1,21 +1,5 @@
 gsap.registerPlugin(CustomEase);
 
-// function scrollTrig() {
-//   let sections = gsap.utils.toArray(".main-a-propos");
-//   gsap.to(sections, {
-//     xPercent: -100 * (sections.length - 1),
-//     ease: "none",
-//     scrollTrigger: {
-//       trigger: ".section-propos",
-//       pin: true,
-//       scrub: 1,
-//       snap: 1 / (sections.length - 1),
-//       // base vertical scrolling on how wide the container is so it feels more natural.
-//       end: () => "+=" + document.querySelector(".main-a-propos").offsetWidth,
-//     },
-//   });
-// }
-
 let tlIntro;
 function intro() {
   tlIntro = new gsap.timeline()
@@ -161,7 +145,7 @@ function enteringMain() {
     tlBgImageAnim.restart();
     tlNavScale.restart();
     tlTyping.restart();
-    tlVintage.restart();
+    // tlVintage.restart();
   });
 }
 
@@ -176,6 +160,9 @@ function backToMain() {
         tlEnterCV.reverse();
       }
     });
+
+    tlVintage.restart();
+    gsap.to(".noiseBG", { opacity: 0.6 });
   });
 
   tlNavScale.seek(1.5).play();
@@ -220,15 +207,6 @@ function filmBurn() {
 let tlBgImageAnim;
 function bgImageAnim() {
   tlBgImageAnim = new gsap.timeline({ paused: true, overwrite: false })
-    // .to("body", { backgroundColor: "rgb(9,9,11)" })
-    // .from(".bg-img", {
-    //   // scale: 0.0025,
-
-    //   opacity: 0,
-    //   // ease: "expoScale(0.0025, 1)",
-    //   duration: 1,
-    // })
-    // .set(".image", { opacity: 1 }, "<")
     .set(".bg-2", { visibility: "visible" })
     .set(".bg-3", { visibility: "visible" })
     .fromTo(".bg-2", { y: "120vh" }, { y: "0vh", ease: "power4", duration: 1 })
@@ -255,28 +233,25 @@ function bgImageAnim() {
   return tlBgImageAnim;
 }
 
-let tlRideau;
-function rideau() {
-  tlRideau = new gsap.timeline({ paused: true }).fromTo(
-    ".screens-tests",
-    {
-      xPercent: -102,
-      stagger: 0.04,
-      duration: 2,
-      ease: "circ",
-    },
-    {
-      delay: 0.1,
-      xPercent: 500,
-      yoyo: true,
-      repeat: 1,
-      repeatDelay: 0.9,
-      repeatRefresh: true,
-    }
-  );
-
-  return tlRideau;
-}
+let tlRideau = new gsap.timeline({ paused: true }).fromTo(
+  ".screens-tests",
+  {
+    xPercent: -102,
+    stagger: 0.04,
+    duration: 2,
+    ease: "circ",
+  },
+  {
+    delay: 0.1,
+    xPercent: 500,
+    yoyo: true,
+    repeat: 1,
+    repeatDelay: 0.9,
+    repeatRefresh: true,
+  }
+);
+// return tlRideau;
+// }
 
 let tlTyping;
 function typing() {
@@ -513,25 +488,25 @@ function letterJump() {
       });
       tlLetterJump.play();
       tlLetterColorChange.play();
-      if (!tlArrow.isActive()) {
-        tlArrow.restart();
-      }
-      if (!tlVintage.isActive()) {
-        $(".fleche-text").text("Cliquez-moi pour redémarrer la bobine de film");
-      } else {
-        $(".fleche-text").text("Cliquez-moi pour arrêter la bobine de film");
-      }
+      // if (!tlArrow.isActive()) {
+      //   tlArrow.restart();
+      // }
+      // if (!tlVintage.isActive()) {
+      //   $(".fleche-text").text("Cliquez-moi pour redémarrer la bobine de film");
+      // } else {
+      //   $(".fleche-text").text("Cliquez-moi pour arrêter la bobine de film");
+      // }
     });
     letter.addEventListener("mouseleave", () => {
       tlLetterJump.reverse();
     });
-    letter.addEventListener("click", () => {
-      if (tlVintage.isActive()) {
-        tlVintage.pause();
-      } else {
-        tlVintage.restart();
-      }
-    });
+    // letter.addEventListener("click", () => {
+    //   if (tlVintage.isActive()) {
+    //     tlVintage.pause();
+    //   } else {
+    //     tlVintage.restart();
+    //   }
+    // });
   });
 }
 
@@ -613,9 +588,7 @@ function enterSection1() {
         opacity: 0,
         duration: 1,
         onComplete: () => {
-          // tlBgImageAnim.reverse();
           gsap.to(".section-propos", { backgroundColor: "rgb(25,5,15)" });
-          // gsap.to("body", { backgroundColor: "rgb(9,9,11)" });
           $(".wrapper").addClass("killed");
         },
       })
@@ -631,12 +604,17 @@ function enterSection1() {
           yPercent: 0,
           stagger: 0.35,
           duration: 0.8,
+          onComplete: () => {
+            gsap.to(".noiseBG", { opacity: 0 });
+            tlVintage.kill();
+          },
+
           onReverseComplete: () => {
             $(".wrapper").removeClass("killed");
+            $(".section-propos").addClass("killed");
             tlRideau.restart();
             tlBgImageAnim.restart();
             tlNavScale.restart();
-            $(".section-propos").addClass("killed");
           },
         },
         "-=1"
@@ -668,9 +646,7 @@ function enterCV() {
       .to(".image", {
         opacity: 0,
         onComplete: () => {
-          // tlBgImageAnim.reverse();
           gsap.to(".cv-container", { backgroundColor: "rgb(9,25,12)" });
-          // gsap.to("body", { backgroundColor: "rgb(9,9,11)" });
           $(".wrapper").addClass("killed");
         },
         onReverseComplete: () => {
@@ -678,6 +654,7 @@ function enterCV() {
           $(".cv-container").addClass("killed");
         },
       })
+
       .add(tlRideau.restart(), "-=0.7")
       .fromTo(
         [".cv-container > * ", "ul > *"],
@@ -694,6 +671,8 @@ function enterCV() {
             tlRideau.restart();
             tlBgImageAnim.restart();
             tlNavScale.restart();
+            tlVintage.restart();
+            gsap.to(".noiseBG", { opacity: 0.6 });
           },
         }
       )
@@ -708,8 +687,11 @@ function enterCV() {
           x: 0,
           stagger: 0.15,
           duration: 0.5,
+          onComplete: () => {
+            tlVintage.kill();
+            gsap.to(".noiseBG", { opacity: 0 });
+          },
         }
-        // "-=1"
       );
   });
   return tlEnterCV;
@@ -717,10 +699,9 @@ function enterCV() {
 
 window.addEventListener("load", () => {
   vintageEffect();
-  rideau();
   filmRoll();
   letterJump();
-  arrowLight();
+  // arrowLight();
   hoverGsapNav();
   bgImageAnim();
   typing();
