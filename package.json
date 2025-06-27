@@ -1,0 +1,23 @@
+{
+  "name": "joederek79.github.io",
+  "version": "1.0.0",
+  "description": "portfolio",
+  "homepage": "https://github.com/Joederek79/Joederek79.github.io#readme",
+  "bugs": {
+    "url": "https://github.com/Joederek79/Joederek79.github.io/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joederek79/Joederek79.github.io.git"
+  },
+  "license": "ISC",
+  "author": "Joe Alarie",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "prettier": "^3.6.2"
+  }
+}
